@@ -4,7 +4,7 @@ with Interfaces;
 with Interfaces.C;
 with Interfaces.C.Strings;
 
-package Unix is
+package Unix_Utils is
    subtype Ptr_Array is Interfaces.C.Strings.chars_ptr_array (0 .. 1);
    subtype clockid_t is Interfaces.C.int range 0 .. 7;
    type Ptr_Ptr_Array is access all Ptr_Array;
@@ -58,4 +58,4 @@ package Unix is
 
    function chown (pathname : Interfaces.C.Strings.chars_ptr; owner : Interfaces.Integer_32; group : Interfaces.Integer_32) return Interfaces.Integer_32;
    pragma Import (C, chown, "chown");
-end Unix;
+end Unix_Utils;
