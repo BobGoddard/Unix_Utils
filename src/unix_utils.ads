@@ -38,6 +38,17 @@ package Unix_Utils is
       TV_NSec   : Interfaces.C.long;
    end record;
 
+   type Password_Entry is record
+      pw_name   : Interfaces.C.Strings.chars_ptr;
+      pw_passwd : Interfaces.C.Strings.chars_ptr;
+      pw_uid    : Interfaces.Integer_32;
+      pw_gid    : Interfaces.Integer_32;
+      pw_gecos  : Interfaces.C.Strings.chars_ptr;
+      pw_dir    : Interfaces.C.Strings.chars_ptr;
+      pw_shell  : Interfaces.C.Strings.chars_ptr;
+   end record;
+--   pragma Convention (C_Pass_By_Copy, Password_Entry);
+
    procedure localtime_r (T : System.Address; TM_Struct : System.Address);
    pragma Import (C, localtime_r, "localtime_r");
 
@@ -58,4 +69,9 @@ package Unix_Utils is
 
    function chown (pathname : Interfaces.C.Strings.chars_ptr; owner : Interfaces.Integer_32; group : Interfaces.Integer_32) return Interfaces.Integer_32;
    pragma Import (C, chown, "chown");
+
+   function Get_PW_Name_R (Name : Interfaces.C.Strings.chars_ptr; PWD : System.Address ; Buf : System.Address; Buf_Len : Interfaces.Unsigned_64; Result : System.Address) return Interfaces.Integer_32;
+   pragma Import (C, Get_PW_Name_R, "getpwnam_r");
+   --  int getpwnam_r(const char *name, struct passwd *pwd, char *buf, size_t buflen, struct passwd **result);
+
 end Unix_Utils;
